@@ -1,9 +1,3 @@
-
-/*
- * Open the console tab
- * to see that the tests pass.
- */
-
 const counter = (state=0, action) =>{
     switch(action.type){
         case 'INCREMENT':
@@ -15,38 +9,18 @@ const counter = (state=0, action) =>{
     }
 }
 
-  expect(
-    counter(0, { type: 'INCREMENT' })
-  ).toEqual(1);
-  
-  expect(
-    counter(1, { type: 'INCREMENT' })
-  ).toEqual(2);
-  
-  expect(
-    counter(2, { type: 'DECREMENT' })
-  ).toEqual(1);
-  
-  expect(
-    counter(1, { type: 'DECREMENT' })
-  ).toEqual(0);
-  
-  expect(
-    counter(1, { type: 'SOMETHING_ELSE' }) 
-  ).toEqual(1);
-  
-  expect(
-    counter(undefined, {})
-  ).toEqual(0);
-  
-  console.log('Tests passed!') || displayInPreview('Tests passed!');
-  
 
+const createStore = Redux.createStore;
 
-// display in plunker preview
-function displayInPreview(string) {
-    var newDiv = document.createElement("div"); 
-    var newContent = document.createTextNode(string); 
-    newDiv.appendChild(newContent);
-    document.body.appendChild(newDiv)
-  }
+const store = createStore(counter);
+
+const render = () => {
+    document.body.innerHTML = store.getState()
+}
+
+store.subscribe(render);
+render();
+
+document.body.addEventListener('click',()=>{
+    store.dispatch({ type: 'INCREMENT'})
+})
