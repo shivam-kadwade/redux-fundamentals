@@ -15,16 +15,16 @@ const createStore = (reducer) =>{
 
     const dispatch = (action)=>{
         state = reducer(state, action)
-        listeners.forEach(listener => listener())
+        listeners.forEach(listener => listener())  // render the updated state
     }
     const getState = () => state
     const subscribe = (listener) =>{
         listeners.push(listener)
         return () => {
-            listeners = listeners.filter(l=> l!==listener)
+            listeners = listeners.filter(l=> l!==listener)  // function to unsubscribe listener
         }
     }
-    dispatch({})
+    dispatch({}) // initiate store with default value
     return {dispatch, getState, subscribe}
 }
 
